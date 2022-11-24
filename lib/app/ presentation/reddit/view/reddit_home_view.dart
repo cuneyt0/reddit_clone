@@ -94,38 +94,25 @@ class RedditHomeView extends StatelessWidget {
     RedditLoadedState? state,
   }) =>
       ClipRRect(
-        borderRadius: BorderRadius.circular(90.0),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minWidth: 24,
-            minHeight: 34,
-            maxWidth: 44,
-            maxHeight: 64,
-          ),
-          child: Image.network(
-            (response?[index ?? 0]?.data?.thumbnail != selfValue ||
-                    response?[index ?? 0]?.data?.thumbnail != defaultValue)
-                ? '${response?[index ?? 0]?.data?.thumbnail}'
-                : checkIfImageUrl,
-            errorBuilder: (context, error, stackTrace) => _errorBuilder(),
-            fit: BoxFit.cover,
-          ),
+        borderRadius: BorderRadius.circular(30),
+        child: Image.network(
+          (response?[index ?? 0]?.data?.thumbnail != selfValue ||
+                  response?[index ?? 0]?.data?.thumbnail != defaultValue)
+              ? '${response?[index ?? 0]?.data?.thumbnail}'
+              : checkIfImageUrl,
+          errorBuilder: (context, error, stackTrace) => _errorBuilder(),
+          fit: BoxFit.cover,
+          height: 70,
+          width: 60,
         ),
       );
 
   ClipRRect _errorBuilder() => ClipRRect(
-        borderRadius: BorderRadius.circular(90.0),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minWidth: 24,
-            minHeight: 34,
-            maxWidth: 44,
-            maxHeight: 64,
-          ),
-          child: const Icon(
-            Icons.remove_circle,
-            color: Colors.red,
-          ),
+        borderRadius: BorderRadius.circular(30),
+        child: const Icon(
+          Icons.remove_circle,
+          color: Colors.red,
+          size: 60,
         ),
       );
 
