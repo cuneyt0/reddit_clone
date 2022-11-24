@@ -50,90 +50,84 @@ class RedditHomeView extends StatelessWidget {
       final response = state.model;
       return RefreshIndicator(
         onRefresh: () async => redditBloc.add(getRefreshPostsEvent(count: 20)),
-        child: CustomScrollView(slivers: [
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: const Text('yükleniyor'),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: _loadedStateBody(response: response, state: state),
-            ),
-          ),
-        ]),
+        child: CustomScrollView(
+          slivers: [
+            SliverList(
+              delegate: SliverChildListDelegate(
+                List.generate(
+                  response?.length ?? 0,
+                  (index) {
+                    return _loadedStateBody(
+                        response: response, state: state, index: index);
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
       );
     }
   }
 
-  ListView _loadedStateBody(
-      {List<RedditBodyChildren?>? response, RedditLoadedState? state}) {
-    return ListView.builder(
-      itemCount: response?.length,
-      itemBuilder: ((context, index) {
-        return ListTile(
-          title: _title(response: response, index: index),
-          leading:
-              _leadingImage(response: response, index: index, state: state),
-          subtitle: _subtitleDescription(response: response, index: index),
-        );
-      }),
+  ListTile _loadedStateBody(
+      {List<RedditBodyChildren?>? response,
+      RedditLoadedState? state,
+      int? index}) {
+    return ListTile(
+      title: _title(response: response, index: index),
+      leading: _leadingImage(response: response, index: index, state: state),
+      subtitle: _subtitleDescription(response: response, index: index),
     );
   }
 
   Text _title({List<RedditBodyChildren?>? response, int? index}) =>
       Text(response?[index ?? 0]?.data?.title ?? '');
 
-  Text _subtitleDescription({List<RedditBodyChildren?>? response, int? index}) {
-    return Text(
-        '${response?[index ?? 0]?.data?.all_awardings?[index ?? 0]?.description}');
-  }
+  Text _subtitleDescription(
+          {List<RedditBodyChildren?>? response, int? index}) =>
+      Text(
+          '${response?[index ?? 0]?.data?.all_awardings?[index ?? 0]?.description}');
 
   ClipRRect _leadingImage({
     List<RedditBodyChildren?>? response,
     int? index,
     RedditLoadedState? state,
-  }) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(90.0),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minWidth: 24,
-          minHeight: 34,
-          maxWidth: 44,
-          maxHeight: 64,
+  }) =>
+      ClipRRect(
+        borderRadius: BorderRadius.circular(90.0),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minWidth: 24,
+            minHeight: 34,
+            maxWidth: 44,
+            maxHeight: 64,
+          ),
+          child: Image.network(
+            (response?[index ?? 0]?.data?.thumbnail != selfValue ||
+                    response?[index ?? 0]?.data?.thumbnail != defaultValue)
+                ? '${response?[index ?? 0]?.data?.thumbnail}'
+                : checkIfImageUrl,
+            errorBuilder: (context, error, stackTrace) => _errorBuilder(),
+            fit: BoxFit.cover,
+          ),
         ),
-        child: Image.network(
-          (response?[index ?? 0]?.data?.thumbnail != selfValue ||
-                  response?[index ?? 0]?.data?.thumbnail != defaultValue)
-              ? '${response?[index ?? 0]?.data?.thumbnail}'
-              : checkIfImageUrl,
-          errorBuilder: (context, error, stackTrace) => _errorBuilder(),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
+      );
 
-  ClipRRect _errorBuilder() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(90.0),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minWidth: 24,
-          minHeight: 34,
-          maxWidth: 44,
-          maxHeight: 64,
+  ClipRRect _errorBuilder() => ClipRRect(
+        borderRadius: BorderRadius.circular(90.0),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minWidth: 24,
+            minHeight: 34,
+            maxWidth: 44,
+            maxHeight: 64,
+          ),
+          child: const Icon(
+            Icons.remove_circle,
+            color: Colors.red,
+          ),
         ),
-        child: const Icon(
-          Icons.remove_circle,
-          color: Colors.red,
-        ),
-      ),
-    );
-  }
+      );
 
   Center _initialState() => const Center(
         child: Text(blocRedditInitialMessage),
