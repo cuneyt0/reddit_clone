@@ -21,7 +21,7 @@ class RedditBloc extends Bloc<RedditEvent, RedditState> {
 
             emit(RedditLoadedState(model: response));
           } catch (e) {
-            emit(RedditFailedState());
+            emit(RedditFailedState(message: 'Beklenmedik bir sonuc oluştu'));
           }
         }
       },

@@ -13,4 +13,7 @@ class RedditLoadedState extends RedditState {
   RedditLoadedState({this.model});
 }
 
-class RedditFailedState extends RedditState {}
+class RedditFailedState extends RedditState {
+  final String? message;
+  RedditFailedState({this.message});
+}

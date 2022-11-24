@@ -29,6 +29,8 @@ class RedditChildrenDataModel {
   int? gilded;
   String? title;
   String? thumbnail;
+  int? thumbnail_height;
+  int? thumbnail_width;
   List<RedditAllAwardingModel?>? all_awardings;
 
   RedditChildrenDataModel(
@@ -50,6 +52,8 @@ class RedditChildrenDataModel {
     saved = json['saved'];
     gilded = json['gilded'];
     title = json['title'];
+    thumbnail_height = json['thumbnail_height'];
+    thumbnail_width = json['thumbnail_width'];
     thumbnail = json['thumbnail'];
     if (json['children'] != null) {
       all_awardings = <RedditAllAwardingModel>[];
@@ -69,6 +73,8 @@ class RedditChildrenDataModel {
     data['gilded'] = gilded;
     data['title'] = title;
     data['thumbnail'] = thumbnail;
+    data['thumbnail_height'] = thumbnail_height;
+    data['thumbnail_width'] = thumbnail_width;
     if (all_awardings != null) {
       data['all_awardings'] = all_awardings!.map((v) => v?.toJson()).toList();
       return data;
