@@ -13,7 +13,6 @@ class RedditHomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final RedditBloc redditBloc = getIt.get<RedditBloc>();
 
-    //final redditBloc = getIt.get<BlocProvider.of<RedditBloc>(context)>();
     return Scaffold(
       appBar: AppBar(title: const Text(homeAppbarTitle)),
       body: BlocBuilder(
