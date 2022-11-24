@@ -69,9 +69,7 @@ class RedditHomeView extends StatelessWidget {
   }
 
   ListTile _loadedStateBody(
-      {List<RedditBodyChildren?>? response,
-      RedditLoadedState? state,
-      int? index}) {
+      {List<RedditChildren?>? response, RedditLoadedState? state, int? index}) {
     return ListTile(
       title: _title(response: response, index: index),
       leading: _leadingImage(response: response, index: index, state: state),
@@ -79,16 +77,14 @@ class RedditHomeView extends StatelessWidget {
     );
   }
 
-  Text _title({List<RedditBodyChildren?>? response, int? index}) =>
+  Text _title({List<RedditChildren?>? response, int? index}) =>
       Text(response?[index ?? 0]?.data?.title ?? '');
 
-  Text _subtitleDescription(
-          {List<RedditBodyChildren?>? response, int? index}) =>
-      Text(
-          '${response?[index ?? 0]?.data?.all_awardings?[index ?? 0]?.description}');
+  Text _subtitleDescription({List<RedditChildren?>? response, int? index}) => Text(
+      '${response?[index ?? 0]?.data?.all_awardings?[index ?? 0]?.description}');
 
   ClipRRect _leadingImage({
-    List<RedditBodyChildren?>? response,
+    List<RedditChildren?>? response,
     int? index,
     RedditLoadedState? state,
   }) =>

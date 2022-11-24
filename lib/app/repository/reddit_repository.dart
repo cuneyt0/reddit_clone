@@ -9,7 +9,7 @@ class RedditRepository extends IRedditRepository {
   RedditRepository({this.iRedditService});
 
   @override
-  Future<List<RedditBodyChildren?>?> getPosts({int? count}) async {
+  Future<List<RedditChildren?>?> getPosts({int? count}) async {
     try {
       final result = await iRedditService?.getPosts(count: count);
       return result;

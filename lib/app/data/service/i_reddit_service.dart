@@ -3,7 +3,7 @@ import 'package:case_reddit/app/data/model/reddit_model.dart';
 abstract class IRedditService {
   final String path = IRedditServicePath.get.rawValue;
 
-  Future<List<RedditBodyChildren?>?> getPosts({int? count});
+  Future<List<RedditChildren?>?> getPosts({int? count});
 }
 
 enum IRedditServicePath { get }

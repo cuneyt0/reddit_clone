@@ -14,14 +14,14 @@ class RedditService extends IRedditService {
   );
 
   @override
-  Future<List<RedditBodyChildren?>?> getPosts({int? count}) async {
+  Future<List<RedditChildren?>?> getPosts({int? count}) async {
     try {
       final response = await dio?.get(path, queryParameters: {'count': count});
       if (response?.statusCode == HttpStatus.ok) {
         if (response?.data['data']['children'] is List) {
-          List<RedditBodyChildren>? list =
+          List<RedditChildren>? list =
               (response?.data['data']['children'] as List)
-                  .map((e) => RedditBodyChildren.fromJson(e))
+                  .map((e) => RedditChildren.fromJson(e))
                   .toList();
           return list;
         }

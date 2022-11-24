@@ -1,5 +1,5 @@
 import 'package:case_reddit/app/data/model/reddit_model.dart';
 
 abstract class IRedditRepository {
-  Future<List<RedditBodyChildren?>?> getPosts({int? count});
+  Future<List<RedditChildren?>?> getPosts({int? count});
 }
