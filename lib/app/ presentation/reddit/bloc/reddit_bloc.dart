@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:case_reddit/app/constant/app_string.dart';
 import 'package:case_reddit/app/data/model/reddit_model.dart';
 import 'package:case_reddit/app/repository/i_reddit_repository.dart';
 import 'package:meta/meta.dart';
@@ -21,7 +22,7 @@ class RedditBloc extends Bloc<RedditEvent, RedditState> {
 
             emit(RedditLoadedState(model: response));
           } catch (e) {
-            emit(RedditFailedState(message: 'Beklenmedik bir sonuc oluştu'));
+            emit(RedditFailedState(message: blocRedditFailedStateMessage));
           }
         } else if (event is getRefreshPostsEvent) {
           emit(RedditLoadingState());
@@ -32,7 +33,7 @@ class RedditBloc extends Bloc<RedditEvent, RedditState> {
 
             emit(RedditLoadedState(model: response));
           } catch (e) {
-            emit(RedditFailedState(message: 'Beklenmedik bir sonuc oluştu'));
+            emit(RedditFailedState(message: blocRedditFailedStateMessage));
           }
         }
       },

@@ -18,12 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AppNotion Case',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: BlocProvider<RedditBloc>(
-        lazy: true,
         create: (_) => getIt.get<RedditBloc>(),
         child: const RedditHomeView(),
       ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:case_reddit/app/constant/app_string.dart';
 import 'package:case_reddit/app/constant/base_url_constant.dart';
 import 'package:case_reddit/app/data/model/reddit_model.dart';
 import 'package:case_reddit/app/data/service/i_reddit_service.dart';
@@ -26,9 +27,9 @@ class RedditService extends IRedditService {
         }
         return [];
       } else if (response?.statusCode == HttpStatus.badRequest) {
-        throw Exception("403 Hatası");
+        throw Exception(badRequest);
       } else {
-        throw Exception("Service katmanında istek atılamadı.");
+        throw Exception(serviceErrorMessage);
       }
     } catch (e) {
       rethrow;
