@@ -30,9 +30,8 @@ class RedditHomeView extends StatelessWidget {
         }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          redditBloc.add(getPostsEvent(count: 20));
-        },
+        onPressed: () => redditBloc.add(getPostsEvent(count: 20)),
+        child: const Icon(Icons.electrical_services),
       ),
     );
   }
