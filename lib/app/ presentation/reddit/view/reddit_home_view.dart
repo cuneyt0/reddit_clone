@@ -23,48 +23,61 @@ class RedditHomeView extends StatelessWidget {
             );
           } else if (state is RedditLoadedState) {
             final response = state.model;
-            return ListView.builder(
-              itemCount: response?.length,
-              itemBuilder: ((context, index) {
-                return ListTile(
-                  title: Text(response?[index]?.data?.title ?? ''),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(90.0),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        minWidth: 24,
-                        minHeight: 34,
-                        maxWidth: 44,
-                        maxHeight: 64,
-                      ),
-                      child: Image.network(
-                        (response?[index]?.data?.thumbnail != 'self' ||
-                                response?[index]?.data?.thumbnail != 'default')
-                            ? '${response?[index]?.data?.thumbnail}'
-                            : 'https://www.vectorstock.com/royalty-free-vector/multiplication-button-or-x-icon-vector-10273548',
-                        errorBuilder: (context, error, stackTrace) => ClipRRect(
-                          borderRadius: BorderRadius.circular(90.0),
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(
-                              minWidth: 24,
-                              minHeight: 34,
-                              maxWidth: 44,
-                              maxHeight: 64,
-                            ),
-                            child: const Icon(
-                              Icons.remove_circle,
-                              color: Colors.red,
+            return RefreshIndicator(
+              onRefresh: () async =>
+                  redditBloc.add(getRefreshPostsEvent(count: 20)),
+              child: CustomScrollView(slivers: [
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: ListView.builder(
+                      itemCount: response?.length,
+                      itemBuilder: ((context, index) {
+                        return ListTile(
+                          title: Text(response?[index]?.data?.title ?? ''),
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(90.0),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                minWidth: 24,
+                                minHeight: 34,
+                                maxWidth: 44,
+                                maxHeight: 64,
+                              ),
+                              child: Image.network(
+                                (response?[index]?.data?.thumbnail != 'self' ||
+                                        response?[index]?.data?.thumbnail !=
+                                            'default')
+                                    ? '${response?[index]?.data?.thumbnail}'
+                                    : 'https://www.vectorstock.com/royalty-free-vector/multiplication-button-or-x-icon-vector-10273548',
+                                errorBuilder: (context, error, stackTrace) =>
+                                    ClipRRect(
+                                  borderRadius: BorderRadius.circular(90.0),
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      minWidth: 24,
+                                      minHeight: 34,
+                                      maxWidth: 44,
+                                      maxHeight: 64,
+                                    ),
+                                    child: const Icon(
+                                      Icons.remove_circle,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
-                        fit: BoxFit.cover,
-                      ),
+                          subtitle: Text(
+                              '${response?[index]?.data?.all_awardings?[index]?.description}'),
+                        );
+                      }),
                     ),
                   ),
-                  subtitle: Text(
-                      '${response?[index]?.data?.all_awardings?[index]?.description}'),
-                );
-              }),
+                )
+              ]),
             );
           } else if (state is RedditFailedState) {
             return Center(child: Text(state.message.toString()));

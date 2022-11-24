@@ -8,3 +8,9 @@ class getPostsEvent extends RedditEvent {
 
   getPostsEvent({this.count});
 }
+
+class getRefreshPostsEvent extends RedditEvent {
+  final int? count;
+
+  getRefreshPostsEvent({this.count});
+}

@@ -23,6 +23,17 @@ class RedditBloc extends Bloc<RedditEvent, RedditState> {
           } catch (e) {
             emit(RedditFailedState(message: 'Beklenmedik bir sonuc oluştu'));
           }
+        } else if (event is getRefreshPostsEvent) {
+          emit(RedditLoadingState());
+
+          try {
+            final response =
+                await redditRepository?.getPosts(count: event.count);
+
+            emit(RedditLoadedState(model: response));
+          } catch (e) {
+            emit(RedditFailedState(message: 'Beklenmedik bir sonuc oluştu'));
+          }
         }
       },
     );
