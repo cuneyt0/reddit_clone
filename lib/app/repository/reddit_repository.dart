@@ -8,12 +8,12 @@ class RedditRepository extends IRedditRepository {
   RedditRepository({this.iRedditService});
 
   @override
-  Future<RedditModel?>? getPosts({int? count}) async {
+  Future<List<RedditBodyChildren?>?> getPosts({int? count}) async {
     try {
       final result = await iRedditService?.getPosts(count: count);
       return result;
     } catch (e) {
-      throw Exception("Repo Katmanında Problem Var");
+      throw Exception("Repo Katmanında Hata Gerçekleşti.");
     }
   }
 }

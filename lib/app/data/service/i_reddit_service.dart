@@ -1,18 +1,17 @@
 import 'package:case_reddit/app/data/model/reddit_model.dart';
-import 'package:dio/dio.dart';
 
 abstract class IRedditService {
-  final String path = IRedditServicePath.GET.rawValue;
+  final String path = IRedditServicePath.get.rawValue;
 
-  Future<RedditModel?>? getPosts({int? count});
+  Future<List<RedditBodyChildren?>?> getPosts({int? count});
 }
 
-enum IRedditServicePath { GET }
+enum IRedditServicePath { get }
 
 extension ILoginSericePathExtension on IRedditServicePath {
   String get rawValue {
     switch (this) {
-      case IRedditServicePath.GET:
+      case IRedditServicePath.get:
         return '/top.json';
     }
   }

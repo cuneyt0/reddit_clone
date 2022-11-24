@@ -8,7 +8,7 @@ class RedditInitial extends RedditState {}
 class RedditLoadingState extends RedditState {}
 
 class RedditLoadedState extends RedditState {
-  final RedditModel? model;
+  final List<RedditBodyChildren?>? model;
 
   RedditLoadedState({this.model});
 }

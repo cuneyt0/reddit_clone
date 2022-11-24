@@ -5,5 +5,6 @@ abstract class RedditEvent {}
 
 class getPostsEvent extends RedditEvent {
   final int? count;
+
   getPostsEvent({this.count});
 }
