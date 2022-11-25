@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:case_reddit/app/constant/app_string.dart';
 import 'package:case_reddit/app/data/model/reddit_model.dart';
-import 'package:case_reddit/app/repository/i_reddit_repository.dart';
+import 'package:case_reddit/app/data/repository/i_reddit_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'reddit_event.dart';
